@@ -93,3 +93,11 @@ body {
     background-color: #0056b3;
   }
   
+  /* styles.css */
+.loading-spinner {
+  display: none; /* Ban đầu ẩn */
+  font-size: 18px;
+  font-weight: bold;
+  color: #007bff;
+  margin-top: 10px;
+}
