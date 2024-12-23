@@ -1,7 +1,8 @@
 // script.js
 const extractTitle = (data) => {
   return (
-    data.hashtag ||
+    data.poemName ||
+    data.test_title ||
     data.animalName ||
     data.blogName ||
     data.song ||
@@ -23,7 +24,7 @@ const extractContent = (data) => {
     data.noidung ?? "",
     data.paragram ?? "",
     data.content ?? "",
-    data.Content ?? ""
+    data.Content ?? "",
   ]
     .filter(Boolean) // Lọc các trường không phải là null, undefined hoặc chuỗi rỗng
     .join("<br><br><br>"); // Nối các trường lại với nhau, mỗi trường cách nhau bằng <br>
@@ -34,15 +35,24 @@ const extractContent = (data) => {
 // Hàm trích xuất tiêu đề phụ
 const extractSubTitle = (data) => {
   const title =
-    (data.alt_name ?? "") + " " + 
-    (data.timeAgo ?? "") + " " +   
-    (data.date ?? "") + " " +      
-    (data.type ?? "") + " " +      
-    (data.author ?? "") + " " +  
-    ((data.tendieu ?? "") + " " +   
-    (data.tendemuc ?? "") + " " +   
-    (data.tenchuong ?? "")) + " " + 
-    (data["Poem Form"] ?? "") + " " + 
+    (data.alt_name ?? "") +
+    " " +
+    (data.timeAgo ?? "") +
+    " " +
+    (data.date ?? "") +
+    " " +
+    (data.type ?? "") +
+    " " +
+    (data.author ?? "") +
+    " " +
+    ((data.tendieu ?? "") +
+      " " +
+      (data.tendemuc ?? "") +
+      " " +
+      (data.tenchuong ?? "")) +
+    " " +
+    (data["Poem Form"] ?? "") +
+    " " +
     (data.artists ?? "");
   return title;
 };
@@ -55,7 +65,7 @@ const extractAdditional = (data) => {
     data.tags ?? "",
     data.keywords ?? "",
     data.category ?? "",
-    data.status ?? ""
+    data.status ?? "",
   ]
     .filter(Boolean) // Lọc bỏ các giá trị rỗng
     .join(", "); // Nối các trường lại bằng dấu phẩy
@@ -89,7 +99,7 @@ function displayResults(songs) {
 
   songs.forEach((song) => {
     const dataDetail = song._source || song; // Adjust for API structure
-    
+
     const title = extractTitle(dataDetail);
     const content = extractContent(dataDetail).replace(/\n/g, "<br>");
     const subTitle = extractSubTitle(dataDetail);
@@ -128,7 +138,11 @@ function displayResults(songs) {
         </div>
       </div>
       <a href="${
-        dataDetail.link || dataDetail.Link || dataDetail.url || dataDetail.comments || '#'
+        dataDetail.link ||
+        dataDetail.Link ||
+        dataDetail.url ||
+        dataDetail.comments ||
+        "#"
       }" target="_blank">Link</a>
     `;
 
